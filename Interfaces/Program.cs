@@ -24,7 +24,7 @@ namespace Interfaces
             Console.WriteLine($"{message}");
        }
 
-        public void Build()
+        void IWorker.Build()
         {
             Console.WriteLine($"Вызван метод Build.");
         }
