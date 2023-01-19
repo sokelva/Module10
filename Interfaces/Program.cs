@@ -12,9 +12,9 @@ namespace Interfaces
         {
             Writer wr = new Writer();
             ((IWriter) wr).Write("Запущен интерфейс IWrite явным методом.");
+            ((IWorker)wr).Build();
         }
-
-        public 
+         
     }
 
     public class Writer :IWriter, IWorker
@@ -26,7 +26,7 @@ namespace Interfaces
 
         public void Build()
         {
-
+            Console.WriteLine($"Вызван метод Build.");
         }
     }
 
