@@ -10,34 +10,42 @@ namespace Interfaces
     {
         static void Main(string[] args)
         {
-            Writer wr = new Writer();
-            ((IWriter) wr).Write("Запущен интерфейс IWrite явным методом.");
-            ((IWorker)wr).Build();
+          
         }
          
     }
 
-    public class Writer :IWriter, IWorker
+    class FileManager : IWriter, IReader, IMailer
     {
-       public void Write(string message)
-       {
-            Console.WriteLine($"{message}");
-       }
-
-        void IWorker.Build()
+        public void Read()
         {
-            Console.WriteLine($"Вызван метод Build.");
+            Console.WriteLine("Читаем файл...");
+        }
+
+        public void SendEmail(string message)
+        {
+            Console.WriteLine($"Отсылаем письмо по почте...");
+        }
+
+        public void Write()
+        {
+            Console.WriteLine("Пишем в файл...");
         }
     }
 
+
     public interface IWriter
     {
-        void Write(string message);
+        void Write();
     }
 
-    public interface IWorker
+    public interface IReader
     {
-        void Build();
+        void Read();
     }
 
+    public interface IMailer
+    {
+        void SendEmail(string messge);
+    }
 }
