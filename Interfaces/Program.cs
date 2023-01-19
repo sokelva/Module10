@@ -83,4 +83,36 @@ namespace Interfaces
             throw new NotImplementedException();
         }
     }
+
+    //--------------------------------------------------------------------------------------
+
+    public interface IBook
+    {
+        void Read();
+    }
+
+    public interface IDevice
+    {
+        void TurnOn();
+        void TurnOff();
+    }
+
+    class ElectronicBook: IBook, IDevice
+    {
+        void IBook.Read()
+        {
+            Console.WriteLine("Реализация интерфейса IBook и метода Read");
+        }
+
+        void IDevice.TurnOn()
+        {
+            Console.WriteLine("Реализация интерфейса IDevice и метода TurnOn");
+        }
+
+        void IDevice.TurnOff()
+        {
+            Console.WriteLine("Реализация интерфейса IDevice и метода TurnOff");
+        }
+
+    }
 }
