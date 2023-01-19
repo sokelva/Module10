@@ -10,38 +10,22 @@ namespace Interfaces
     {
         static void Main(string[] args)
         {
+            Writer wr = new Writer();
+            ((IWriter) wr).Write("Запущен интерфейс IWrite явным методом.");
         }
     }
 
-    public class Manager : IManager
+    public class Writer : IWriter
     {
-        public void Create()
-        {
-
-        }
-
-        public void Read()
-        {
-
-        }
-
-        public void Update()
-        {
-
-        }
-
-        public void Delete()
-        {
-
-        }
+       public void Write(string message)
+       {
+            Console.WriteLine($"{message}");
+       }
     }
 
-    public interface IManager
+    public interface IWriter
     {
-        void Create();
-        void Read();
-        void Update();
-        void Delete();
+        void Write(string message);
     }
 
 }
