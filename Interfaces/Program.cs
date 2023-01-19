@@ -17,17 +17,17 @@ namespace Interfaces
 
     class FileManager : IWriter, IReader, IMailer
     {
-        public void Read()
+        void IReader.Read()
         {
             Console.WriteLine("Читаем файл...");
         }
 
-        public void SendEmail(string message)
+        void IMailer.SendEmail(string message)
         {
             Console.WriteLine($"Отсылаем письмо по почте...");
         }
 
-        public void Write()
+        void IWriter.Write()
         {
             Console.WriteLine("Пишем в файл...");
         }
@@ -47,5 +47,40 @@ namespace Interfaces
     public interface IMailer
     {
         void SendEmail(string messge);
+    }
+
+    //======================================================================
+
+    public interface ICreatable
+    {
+        void Create();
+    }
+
+    public interface IDeletable
+    {
+        void Delete();
+    }
+
+    public interface IUpdatable
+    {
+        void Update();
+    }
+
+    public class Entity : ICreatable, IDeletable, IUpdatable
+    {
+        public void Create()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
