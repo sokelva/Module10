@@ -3,116 +3,85 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+
 
 namespace Interfaces
 {
     class Program
     {
+        static ILogger logger { get; set; }
+
         static void Main(string[] args)
         {
-          
+            do
+            {
+                Calculate clkl = new Calculate();
+                try
+                {
+                    clkl.Event();
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Введите число а");
+                    int a = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Введите число b");
+                    int b = int.Parse(Console.ReadLine());
+                    clkl.DoCalculate(a, b);
+                }
+                catch(Exception ex)
+                {
+                    clkl.Error(ex.Message);
+                }
+                finally
+                {
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine("---------------------------------------\nКалькулятор закончил вычисления.");
+                    Console.ReadKey();
+                }
+            }
+            while (Console.ReadKey().Key != ConsoleKey.Escape);
         }
-         
     }
 
-    class FileManager : IWriter, IReader, IMailer
+    public class Calculate : ILogger, IDoCalculate
     {
-        void IReader.Read()
+        public Calculate()
         {
-            Console.WriteLine("Читаем файл...");
         }
 
-        void IMailer.SendEmail(string message)
+        public void DoCalculate(int a, int b)
         {
-            Console.WriteLine($"Отсылаем письмо по почте...");
+            Console.WriteLine($"Результат: {a}+{b} = {a + b}");
+            Thread.Sleep(2000);
         }
 
-        void IWriter.Write()
+        public void Error(string message)
         {
-            Console.WriteLine("Пишем в файл...");
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"Сообщение об ошибке: {message}.");
+            Thread.Sleep(2000);
         }
-    }
 
-
-    public interface IWriter
-    {
-        void Write();
-    }
-
-    public interface IReader
-    {
-        void Read();
-    }
-
-    public interface IMailer
-    {
-        void SendEmail(string messge);
-    }
-
-    //======================================================================
-
-    public interface ICreatable
-    {
-        void Create();
-    }
-
-    public interface IDeletable
-    {
-        void Delete();
-    }
-
-    public interface IUpdatable
-    {
-        void Update();
-    }
-
-    public class Entity : ICreatable, IDeletable, IUpdatable
-    {
-        public void Create()
+        public void Event()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update()
-        {
-            throw new NotImplementedException();
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"Запущен калькулятор.\n----------------------------------------------------");
+            Thread.Sleep(3000);
         }
     }
 
-    //--------------------------------------------------------------------------------------
-
-    public interface IBook
+    public interface ILogger
     {
-        void Read();
+        void Error(string mess);
+
+        void Event();
     }
 
-    public interface IDevice
+    public interface IDoCalculate
     {
-        void TurnOn();
-        void TurnOff();
-    }
-
-    class ElectronicBook: IBook, IDevice
-    {
-        void IBook.Read()
-        {
-            Console.WriteLine("Реализация интерфейса IBook и метода Read");
-        }
-
-        void IDevice.TurnOn()
-        {
-            Console.WriteLine("Реализация интерфейса IDevice и метода TurnOn");
-        }
-
-        void IDevice.TurnOff()
-        {
-            Console.WriteLine("Реализация интерфейса IDevice и метода TurnOff");
-        }
-
+        void DoCalculate(int a, int b);
     }
 }
